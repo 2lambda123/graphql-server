@@ -203,6 +203,20 @@ class GraphiQLOptions(TypedDict):
 
 
 def process_var(template: str, name: str, value: Any, jsonify=False) -> str:
+    """Processes a template string by replacing all instances of a given variable name with a given value.
+    Parameters:
+        - template (str): The template string to be processed.
+        - name (str): The name of the variable to be replaced.
+        - value (Any): The value to replace the variable with.
+        - jsonify (bool): Optional parameter that specifies whether the value should be converted to JSON format before being inserted into the template. Defaults to False.
+    Returns:
+        - str: The processed template string with all instances of the given variable name replaced with the given value.
+    Processing Logic:
+        - Uses regular expressions to find all instances of the variable name in the template string.
+        - If the jsonify parameter is set to True, the value is converted to JSON format before being inserted into the template.
+        - Any backslashes in the value are escaped to prevent issues with the regular expression pattern.
+        - The processed template string is returned."""
+    
     pattern = r"{{\s*" + name.replace("\\", r"\\") + r"(\s*|[^}]+)*\s*}}"
     if jsonify and value not in ["null", "undefined"]:
         value = json.dumps(value)
@@ -213,6 +227,8 @@ def process_var(template: str, name: str, value: Any, jsonify=False) -> str:
 
 
 def simple_renderer(template: str, **values: Dict[str, Any]) -> str:
+    """"""
+    
     replace = [
         "graphiql_version",
         "graphiql_html_title",
@@ -284,6 +300,8 @@ async def render_graphiql_async(
     graphiql_template, template_vars = _render_graphiql(data, config, options)
 
     if jinja_env := config.get("jinja_env"):
+        """"""
+        
         template = jinja_env.from_string(graphiql_template)
         if jinja_env.is_async:
             source = await template.render_async(**template_vars)
@@ -302,6 +320,8 @@ def render_graphiql_sync(
     graphiql_template, template_vars = _render_graphiql(data, config, options)
 
     if jinja_env := config.get("jinja_env"):
+        """"""
+        
         template = jinja_env.from_string(graphiql_template)
         source = template.render(**template_vars)
     else:

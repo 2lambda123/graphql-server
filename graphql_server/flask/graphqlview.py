@@ -53,6 +53,19 @@ class GraphQLView(View):
     encode = staticmethod(json_encode)
 
     def __init__(self, **kwargs):
+        """Creates an instance of the GraphQLView class with the provided keyword arguments.
+        Parameters:
+            - kwargs (dict): Keyword arguments used to set attributes of the GraphQLView instance.
+        Returns:
+            - None: This function does not return anything.
+        Processing Logic:
+            - Set attributes using keyword arguments.
+            - Check if provided schema is a GraphQLSchema instance.
+            - If not, check if it is wrapped in a Graphene schema.
+            - If not, raise a TypeError.
+            - Check if a Jinja environment is provided.
+            - If so, check if it is a valid Jinja environment."""
+        
         super().__init__()
         for key, value in kwargs.items():
             if hasattr(self, key):
@@ -68,9 +81,20 @@ class GraphQLView(View):
             _check_jinja(self.jinja_env)
 
     def get_root_value(self):
+        """"Returns the root value of the current object."
+        Parameters:
+            - self (object): The current object.
+        Returns:
+            - root_value (type): The root value of the current object.
+        Processing Logic:
+            - Get the root value from the current object.
+            - No additional processing logic needed."""
+        
         return self.root_value
 
     def get_context(self):
+        """"""
+        
         context = (
             copy.copy(self.context)
             if self.context is not None and isinstance(self.context, MutableMapping)
@@ -81,17 +105,25 @@ class GraphQLView(View):
         return context
 
     def get_middleware(self):
+        """"""
+        
         return self.middleware
 
     def get_validation_rules(self):
+        """"""
+        
         if self.validation_rules is None:
             return specified_rules
         return self.validation_rules
 
     def get_execution_context_class(self):
+        """"""
+        
         return self.execution_context_class
 
     def dispatch_request(self):
+        """"""
+        
         try:
             request_method = request.method.lower()
             data = self.parse_body()
@@ -161,6 +193,8 @@ class GraphQLView(View):
 
     @staticmethod
     def parse_body():
+        """"""
+        
         # We use mimetype here since we don't need the other
         # information provided by content_type
         if (content_type := request.mimetype) == "application/graphql":
@@ -178,6 +212,8 @@ class GraphQLView(View):
         return {}
 
     def should_display_graphiql(self):
+        """"""
+        
         if not self.graphiql or "raw" in request.args:
             return False
 
@@ -185,6 +221,8 @@ class GraphQLView(View):
 
     @staticmethod
     def request_wants_html():
+        """"""
+        
         best = request.accept_mimetypes.best_match(["application/json", "text/html"])
         return (
             best == "text/html"
