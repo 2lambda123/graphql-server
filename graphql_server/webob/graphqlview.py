@@ -63,7 +63,7 @@ class GraphQLView:
             - If not, checks if it is wrapped in a Graphene schema.
             - Raises a TypeError if no schema is provided.
             - Checks if the provided jinja_env is valid."""
-        
+
         super().__init__()
         for key, value in kwargs.items():
             if hasattr(self, key):
@@ -80,12 +80,12 @@ class GraphQLView:
 
     def get_root_value(self):
         """"""
-        
+
         return self.root_value
 
     def get_context(self, request):
         """"""
-        
+
         context = (
             copy.copy(self.context)
             if self.context is not None and isinstance(self.context, MutableMapping)
@@ -97,24 +97,24 @@ class GraphQLView:
 
     def get_middleware(self):
         """"""
-        
+
         return self.middleware
 
     def get_validation_rules(self):
         """"""
-        
+
         if self.validation_rules is None:
             return specified_rules
         return self.validation_rules
 
     def get_execution_context_class(self):
         """"""
-        
+
         return self.execution_context_class
 
     def dispatch_request(self, request):
         """"""
-        
+
         try:
             request_method = request.method.lower()
             data = self.parse_body(request)
@@ -200,7 +200,7 @@ class GraphQLView:
     @staticmethod
     def parse_body(request):
         """"""
-        
+
         # We use mimetype here since we don't need the other
         # information provided by content_type
         if (content_type := request.content_type) == "application/graphql":
@@ -219,7 +219,7 @@ class GraphQLView:
 
     def should_display_graphiql(self, request):
         """"""
-        
+
         if not self.graphiql or "raw" in request.params:
             return False
 
@@ -228,6 +228,6 @@ class GraphQLView:
     @staticmethod
     def request_wants_html(request):
         """"""
-        
+
         best = request.accept.best_match(["application/json", "text/html"])
         return best == "text/html"

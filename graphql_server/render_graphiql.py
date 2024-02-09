@@ -216,7 +216,7 @@ def process_var(template: str, name: str, value: Any, jsonify=False) -> str:
         - If the jsonify parameter is set to True, the value is converted to JSON format before being inserted into the template.
         - Any backslashes in the value are escaped to prevent issues with the regular expression pattern.
         - The processed template string is returned."""
-    
+
     pattern = r"{{\s*" + name.replace("\\", r"\\") + r"(\s*|[^}]+)*\s*}}"
     if jsonify and value not in ["null", "undefined"]:
         value = json.dumps(value)
@@ -228,7 +228,7 @@ def process_var(template: str, name: str, value: Any, jsonify=False) -> str:
 
 def simple_renderer(template: str, **values: Dict[str, Any]) -> str:
     """"""
-    
+
     replace = [
         "graphiql_version",
         "graphiql_html_title",
@@ -301,7 +301,7 @@ async def render_graphiql_async(
 
     if jinja_env := config.get("jinja_env"):
         """"""
-        
+
         template = jinja_env.from_string(graphiql_template)
         if jinja_env.is_async:
             source = await template.render_async(**template_vars)
@@ -321,7 +321,7 @@ def render_graphiql_sync(
 
     if jinja_env := config.get("jinja_env"):
         """"""
-        
+
         template = jinja_env.from_string(graphiql_template)
         source = template.render(**template_vars)
     else:

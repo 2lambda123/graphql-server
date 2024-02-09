@@ -67,7 +67,7 @@ class GraphQLView:
             - If not, check if the schema is wrapped in a Graphene schema.
             - If still not an instance of GraphQLSchema, raise a TypeError.
             - If a jinja_env is provided, check if it is a valid jinja environment."""
-        
+
         super().__init__()
         for key, value in kwargs.items():
             if hasattr(self, key):
@@ -91,7 +91,7 @@ class GraphQLView:
         Processing Logic:
             - Get the root value.
             - Return the root value.""""
-        
+
         return self.root_value
 
     def get_context(self, request):
@@ -105,7 +105,7 @@ class GraphQLView:
             - Copy context if it exists.
             - Add request to context if not already present.
             - Return the updated context dictionary."""
-        
+
         context = (
             copy.copy(self.context)
             if self.context is not None and isinstance(self.context, MutableMapping)
@@ -117,25 +117,25 @@ class GraphQLView:
 
     def get_middleware(self):
         """"""
-        
+
         return self.middleware
 
     def get_validation_rules(self):
         """"""
-        
+
         if self.validation_rules is None:
             return specified_rules
         return self.validation_rules
 
     def get_execution_context_class(self):
         """"""
-        
+
         return self.execution_context_class
 
     @staticmethod
     async def parse_body(request):
         """"""
-        
+
         # request.text() is the aiohttp equivalent to
         # request.body.decode("utf8")
         if (content_type := request.content_type) == "application/graphql":
@@ -163,7 +163,7 @@ class GraphQLView:
     #  `request_wants_html` methods.
     def is_graphiql(self, request):
         """"""
-        
+
         return all(
             [
                 self.graphiql,
@@ -181,14 +181,14 @@ class GraphQLView:
     # TODO: Same stuff as above method.
     def is_pretty(self, request):
         """"""
-        
+
         return any(
             [self.pretty, self.is_graphiql(request), request.query.get("pretty")]
         )
 
     async def __call__(self, request):
         """"""
-        
+
         try:
             data = await self.parse_body(request)
             request_method = request.method.lower()
@@ -299,7 +299,7 @@ class GraphQLView:
     @classmethod
     def attach(cls, app, *, route_path="/graphql", route_name="graphql", **kwargs):
         """"""
-        
+
         view = cls(**kwargs)
         app.router.add_route("*", route_path, _asyncify(view), name=route_name)
 
