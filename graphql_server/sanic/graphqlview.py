@@ -191,8 +191,7 @@ class GraphQLView(HTTPMethodView):
 
     # noinspection PyBroadException
     def parse_body(self, request):
-        content_type = self.get_mime_type(request)
-        if content_type == "application/graphql":
+        if (content_type := self.get_mime_type(request)) == "application/graphql":
             return {"query": request.body.decode("utf8")}
 
         elif content_type == "application/json":

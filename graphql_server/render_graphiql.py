@@ -282,9 +282,8 @@ async def render_graphiql_async(
     options: Optional[GraphiQLOptions] = None,
 ) -> str:
     graphiql_template, template_vars = _render_graphiql(data, config, options)
-    jinja_env = config.get("jinja_env")
 
-    if jinja_env:
+    if jinja_env := config.get("jinja_env"):
         template = jinja_env.from_string(graphiql_template)
         if jinja_env.is_async:
             source = await template.render_async(**template_vars)
@@ -301,9 +300,8 @@ def render_graphiql_sync(
     options: Optional[GraphiQLOptions] = None,
 ) -> str:
     graphiql_template, template_vars = _render_graphiql(data, config, options)
-    jinja_env = config.get("jinja_env")
 
-    if jinja_env:
+    if jinja_env := config.get("jinja_env"):
         template = jinja_env.from_string(graphiql_template)
         source = template.render(**template_vars)
     else:

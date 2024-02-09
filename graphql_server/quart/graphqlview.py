@@ -179,8 +179,7 @@ class GraphQLView(View):
     async def parse_body():
         # We use mimetype here since we don't need the other
         # information provided by content_type
-        content_type = request.mimetype
-        if content_type == "application/graphql":
+        if (content_type := request.mimetype) == "application/graphql":
             refined_data = await request.get_data(as_text=True)
             return {"query": refined_data}
 

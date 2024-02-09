@@ -263,8 +263,7 @@ def get_response(
         if not isinstance(params.query, str):
             raise HttpQueryError(400, "Unexpected query type.")
 
-        schema_validation_errors = validate_schema(schema)
-        if schema_validation_errors:
+        if schema_validation_errors := validate_schema(schema):
             return ExecutionResult(data=None, errors=schema_validation_errors)
 
         try:
@@ -287,10 +286,9 @@ def get_response(
                         headers={"Allow": "POST"},
                     )
 
-        validation_errors = validate(
+        if validation_errors := validate(
             schema, document, rules=validation_rules, max_errors=max_errors
-        )
-        if validation_errors:
+        ):
             return ExecutionResult(data=None, errors=validation_errors)
 
         execution_result = execute(

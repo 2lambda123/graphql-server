@@ -163,8 +163,7 @@ class GraphQLView(View):
     def parse_body():
         # We use mimetype here since we don't need the other
         # information provided by content_type
-        content_type = request.mimetype
-        if content_type == "application/graphql":
+        if (content_type := request.mimetype) == "application/graphql":
             return {"query": request.data.decode("utf8")}
 
         elif content_type == "application/json":

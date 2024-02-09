@@ -96,10 +96,9 @@ class GraphQLView:
 
     @staticmethod
     async def parse_body(request):
-        content_type = request.content_type
         # request.text() is the aiohttp equivalent to
         # request.body.decode("utf8")
-        if content_type == "application/graphql":
+        if (content_type := request.content_type) == "application/graphql":
             r_text = await request.text()
             return {"query": r_text}
 
