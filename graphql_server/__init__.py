@@ -150,7 +150,7 @@ def json_encode_pretty(data: Union[Dict, List]) -> str:
         - str: A pretty-printed JSON string of the data.
     Processing Logic:
         - Use json_encode() with pretty=True."""
-    
+
     return json_encode(data, True)
 
 
@@ -352,7 +352,7 @@ def _check_jinja(jinja_env: Any) -> None:
     Processing Logic:
         - Checks if Jinja2 is installed.
         - Checks if jinja_env is of type jinja2.Environment."""
-    
+
     try:
         from jinja2 import Environment
     except ImportError:  # pragma: no cover
