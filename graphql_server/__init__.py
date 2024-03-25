@@ -6,6 +6,7 @@ GraphQL-Server is a base library that serves as a helper
 for building GraphQL servers or integrations into existing web frameworks using
 [GraphQL-Core](https://github.com/graphql-python/graphql-core).
 """
+
 import json
 from collections import namedtuple
 from collections.abc import MutableMapping
