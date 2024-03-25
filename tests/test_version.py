@@ -51,7 +51,7 @@ def version(version_and_version_info: Tuple[str, VersionInfoType]) -> str:
 
 @pytest.fixture
 def version_info(
-    version_and_version_info: Tuple[str, VersionInfoType]
+    version_and_version_info: Tuple[str, VersionInfoType],
 ) -> VersionInfoType:
     return version_and_version_info[1]
 
