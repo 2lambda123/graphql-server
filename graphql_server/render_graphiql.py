@@ -1,5 +1,6 @@
 """Based on (express-graphql)[https://github.com/graphql/express-graphql/blob/main/src/renderGraphiQL.ts] and
 (graphql-ws)[https://github.com/enisdenjo/graphql-ws]"""
+
 import json
 import re
 from typing import Any, Dict, Optional, Tuple
