@@ -144,6 +144,14 @@ def json_encode(data: Union[Dict, List], pretty: bool = False) -> str:
 
 
 def json_encode_pretty(data: Union[Dict, List]) -> str:
+    """Encodes data into a pretty-printed JSON string.
+    Parameters:
+        - data (Union[Dict, List]): Data to be encoded into JSON.
+    Returns:
+        - str: A pretty-printed JSON string of the data.
+    Processing Logic:
+        - Use json_encode() with pretty=True."""
+
     return json_encode(data, True)
 
 
@@ -264,8 +272,7 @@ def get_response(
         if not isinstance(params.query, str):
             raise HttpQueryError(400, "Unexpected query type.")
 
-        schema_validation_errors = validate_schema(schema)
-        if schema_validation_errors:
+        if schema_validation_errors := validate_schema(schema):
             return ExecutionResult(data=None, errors=schema_validation_errors)
 
         try:
@@ -288,10 +295,9 @@ def get_response(
                         headers={"Allow": "POST"},
                     )
 
-        validation_errors = validate(
+        if validation_errors := validate(
             schema, document, rules=validation_rules, max_errors=max_errors
-        )
-        if validation_errors:
+        ):
             return ExecutionResult(data=None, errors=validation_errors)
 
         execution_result = execute(
@@ -339,6 +345,15 @@ def format_execution_result(
 
 
 def _check_jinja(jinja_env: Any) -> None:
+    """Checks if Jinja2 is installed and if the provided jinja_env is of type jinja2.Environment.
+    Parameters:
+        - jinja_env (Any): The jinja environment to be checked.
+    Returns:
+        - None: Does not return anything.
+    Processing Logic:
+        - Checks if Jinja2 is installed.
+        - Checks if jinja_env is of type jinja2.Environment."""
+
     try:
         from jinja2 import Environment
     except ImportError:  # pragma: no cover

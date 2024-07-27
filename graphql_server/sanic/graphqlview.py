@@ -58,6 +58,18 @@ class GraphQLView(HTTPMethodView):
     encode = staticmethod(json_encode)
 
     def __init__(self, **kwargs):
+        """Initialize a GraphQLView object.
+        Parameters:
+            - kwargs (dict): Keyword arguments to be set as attributes of the object.
+        Returns:
+            - None: This function does not return anything.
+        Processing Logic:
+            - Set keyword arguments as attributes.
+            - Check if schema is a GraphQLSchema object.
+            - If not, check if it is wrapped in a Graphene schema.
+            - If not, raise TypeError.
+            - If jinja_env is not None, check if it is a valid Jinja environment."""
+
         super().__init__()
         for key, value in kwargs.items():
             if hasattr(self, key):
@@ -73,9 +85,13 @@ class GraphQLView(HTTPMethodView):
             _check_jinja(self.jinja_env)
 
     def get_root_value(self):
+        """"""
+
         return self.root_value
 
     def get_context(self, request):
+        """"""
+
         context = (
             copy.copy(self.context)
             if self.context is not None and isinstance(self.context, MutableMapping)
@@ -86,17 +102,25 @@ class GraphQLView(HTTPMethodView):
         return context
 
     def get_middleware(self):
+        """"""
+
         return self.middleware
 
     def get_validation_rules(self):
+        """"""
+
         if self.validation_rules is None:
             return specified_rules
         return self.validation_rules
 
     def get_execution_context_class(self):
+        """"""
+
         return self.execution_context_class
 
     async def __handle_request(self, request, *args, **kwargs):
+        """"""
+
         try:
             request_method = request.method.lower()
             data = self.parse_body(request)
@@ -191,8 +215,9 @@ class GraphQLView(HTTPMethodView):
 
     # noinspection PyBroadException
     def parse_body(self, request):
-        content_type = self.get_mime_type(request)
-        if content_type == "application/graphql":
+        """"""
+
+        if (content_type := self.get_mime_type(request)) == "application/graphql":
             return {"query": request.body.decode("utf8")}
 
         elif content_type == "application/json":
@@ -208,6 +233,8 @@ class GraphQLView(HTTPMethodView):
 
     @staticmethod
     def get_mime_type(request):
+        """"""
+
         # We use mime type here since we don't need the other
         # information provided by content_type
         if "content-type" not in request.headers:
@@ -217,6 +244,8 @@ class GraphQLView(HTTPMethodView):
         return mime_type
 
     def should_display_graphiql(self, request):
+        """"""
+
         if not self.graphiql or "raw" in request.args:
             return False
 
@@ -224,6 +253,8 @@ class GraphQLView(HTTPMethodView):
 
     @staticmethod
     def request_wants_html(request):
+        """"""
+
         accept = request.headers.get("accept", {})
         return "text/html" in accept or "*/*" in accept
 
