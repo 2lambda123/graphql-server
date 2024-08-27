@@ -56,6 +56,18 @@ class GraphQLView:
     encode = staticmethod(json_encode)
 
     def __init__(self, **kwargs):
+        """Initializes the GraphQLView object with the provided keyword arguments.
+        Parameters:
+            - kwargs (dict): Keyword arguments to be set as attributes of the GraphQLView object.
+        Returns:
+            - None: This function does not return any value.
+        Processing Logic:
+            - Set the provided keyword arguments as attributes of the GraphQLView object.
+            - Check if the provided schema is an instance of GraphQLSchema.
+            - If not, check if the schema is wrapped in a Graphene schema.
+            - If still not an instance of GraphQLSchema, raise a TypeError.
+            - If a jinja_env is provided, check if it is a valid jinja environment."""
+
         super().__init__()
         for key, value in kwargs.items():
             if hasattr(self, key):
@@ -71,9 +83,29 @@ class GraphQLView:
             _check_jinja(self.jinja_env)
 
     def get_root_value(self):
+        """"Returns the root value of the current object.
+        Parameters:
+            - self (object): The current object.
+        Returns:
+            - root_value (any): The root value of the current object.
+        Processing Logic:
+            - Get the root value.
+            - Return the root value.""""
+
         return self.root_value
 
     def get_context(self, request):
+        """Returns the context dictionary for the given request, with the request added if not already present.
+        Parameters:
+            - self (object): The object calling the function.
+            - request (object): The request object to be added to the context.
+        Returns:
+            - context (dict): The context dictionary for the given request.
+        Processing Logic:
+            - Copy context if it exists.
+            - Add request to context if not already present.
+            - Return the updated context dictionary."""
+
         context = (
             copy.copy(self.context)
             if self.context is not None and isinstance(self.context, MutableMapping)
@@ -84,22 +116,29 @@ class GraphQLView:
         return context
 
     def get_middleware(self):
+        """"""
+
         return self.middleware
 
     def get_validation_rules(self):
+        """"""
+
         if self.validation_rules is None:
             return specified_rules
         return self.validation_rules
 
     def get_execution_context_class(self):
+        """"""
+
         return self.execution_context_class
 
     @staticmethod
     async def parse_body(request):
-        content_type = request.content_type
+        """"""
+
         # request.text() is the aiohttp equivalent to
         # request.body.decode("utf8")
-        if content_type == "application/graphql":
+        if (content_type := request.content_type) == "application/graphql":
             r_text = await request.text()
             return {"query": r_text}
 
@@ -123,6 +162,8 @@ class GraphQLView:
     #  checks as this is equivalent to `should_display_graphiql` and
     #  `request_wants_html` methods.
     def is_graphiql(self, request):
+        """"""
+
         return all(
             [
                 self.graphiql,
@@ -139,11 +180,15 @@ class GraphQLView:
 
     # TODO: Same stuff as above method.
     def is_pretty(self, request):
+        """"""
+
         return any(
             [self.pretty, self.is_graphiql(request), request.query.get("pretty")]
         )
 
     async def __call__(self, request):
+        """"""
+
         try:
             data = await self.parse_body(request)
             request_method = request.method.lower()
@@ -253,6 +298,8 @@ class GraphQLView:
 
     @classmethod
     def attach(cls, app, *, route_path="/graphql", route_name="graphql", **kwargs):
+        """"""
+
         view = cls(**kwargs)
         app.router.add_route("*", route_path, _asyncify(view), name=route_name)
 
