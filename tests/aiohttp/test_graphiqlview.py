@@ -91,15 +91,7 @@ async def test_graphiql_enabled_async_schema(app, client):
     )
 
     expected_response = (
-        (
-            "{\n"
-            '  "data": {\n'
-            '    "a": "hey",\n'
-            '    "b": "hey2",\n'
-            '    "c": "hey3"\n'
-            "  }\n"
-            "}"
-        )
+        ('{\n  "data": {\n    "a": "hey",\n    "b": "hey2",\n    "c": "hey3"\n  }\n}')
         .replace('"', '\\"')
         .replace("\n", "\\n")
     )
@@ -124,14 +116,7 @@ async def test_graphiql_enabled_sync_schema(app, client):
     )
 
     expected_response = (
-        (
-            "{\n"
-            '  "data": {\n'
-            '    "a": "synced_one",\n'
-            '    "b": "synced_two"\n'
-            "  }\n"
-            "}"
-        )
+        ('{\n  "data": {\n    "a": "synced_one",\n    "b": "synced_two"\n  }\n}')
         .replace('"', '\\"')
         .replace("\n", "\\n")
     )
