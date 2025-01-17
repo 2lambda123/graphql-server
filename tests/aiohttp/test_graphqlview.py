@@ -88,8 +88,7 @@ async def test_errors_when_missing_operation_name(client):
         "errors": [
             {
                 "message": (
-                    "Must provide operation name if query contains multiple "
-                    "operations."
+                    "Must provide operation name if query contains multiple operations."
                 ),
             },
         ]
@@ -364,7 +363,7 @@ async def test_supports_pretty_printing(client):
     response = await client.get(url_string(query="{test}", pretty="1"))
 
     text = await response.text()
-    assert text == "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+    assert text == '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
 
 
 @pytest.mark.asyncio
@@ -379,7 +378,7 @@ async def test_supports_pretty_printing_by_request(client):
     response = await client.get(url_string(query="{test}", pretty="1"))
 
     assert await response.text() == (
-        "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+        '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
     )
 
 

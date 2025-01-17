@@ -323,7 +323,7 @@ def test_supports_pretty_printing(app):
     _, response = app.test_client.get(uri=url_string(query="{test}"))
 
     assert response.body.decode() == (
-        "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+        '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
     )
 
 
@@ -338,7 +338,7 @@ def test_supports_pretty_printing_by_request(app):
     _, response = app.test_client.get(uri=url_string(query="{test}", pretty="1"))
 
     assert response.body.decode() == (
-        "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+        '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
     )
 
 

@@ -442,7 +442,7 @@ def test_supports_pretty_printing_data():
     result = {"data": results[0].data}
 
     assert json_encode(result, pretty=True) == (
-        "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+        '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
     )
 
 

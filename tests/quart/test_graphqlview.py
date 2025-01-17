@@ -436,7 +436,7 @@ async def test_supports_pretty_printing(app: Quart, client: TestClientProtocol):
     response = await execute_client(app, client, query="{test}")
 
     result = await response.get_data(as_text=True)
-    assert result == ("{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}")
+    assert result == ('{\n  "data": {\n    "test": "Hello World"\n  }\n}')
 
 
 @pytest.mark.asyncio
@@ -455,7 +455,7 @@ async def test_supports_pretty_printing_by_request(
     response = await execute_client(app, client, query="{test}", pretty="1")
 
     result = await response.get_data(as_text=True)
-    assert result == "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+    assert result == '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
 
 
 @pytest.mark.asyncio

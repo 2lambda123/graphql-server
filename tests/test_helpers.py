@@ -211,7 +211,7 @@ def test_encode_execution_results_with_pretty_encode():
 
     output = encode_execution_results(execution_results, encode=json_encode_pretty)
     body = output.body
-    assert body == "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+    assert body == '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
 
 
 def test_encode_execution_results_not_pretty_by_default():

@@ -315,7 +315,7 @@ def test_supports_pretty_printing(client, settings):
     response = client.get(url_string(query="{test}"))
 
     assert response.body.decode() == (
-        "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+        '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
     )
 
 
@@ -330,7 +330,7 @@ def test_supports_pretty_printing_by_request(client):
     response = client.get(url_string(query="{test}", pretty="1"))
 
     assert response.body.decode() == (
-        "{\n" '  "data": {\n' '    "test": "Hello World"\n' "  }\n" "}"
+        '{\n  "data": {\n    "test": "Hello World"\n  }\n}'
     )
 
 
